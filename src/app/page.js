@@ -1,14 +1,5 @@
 "use client";
 
-/* =============================================================================
-  SEO OPTIMIZATION NOTE: 
-  Next.js 14 App Router does not allow exporting `metadata` from a "use client" file.
-  To use the Metadata API properly while keeping this page interactive, move the 
-  `metadata` export below into your `layout.js`, or convert this file into a 
-  Server Component and import the interactive sections as separate client components.
-  =============================================================================
-*/
-
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
