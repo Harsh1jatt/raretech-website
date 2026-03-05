@@ -1,9 +1,15 @@
 "use client";
 
+<<<<<<< HEAD
 import React, { useState } from "react";
 import axios from "axios";
 import { Loader2, FileDown, ChevronLeft, ChevronRight, Search, Award, ShieldCheck, HelpCircle, AlertCircle } from "lucide-react";
 import Link from "next/link";
+=======
+import { useState } from "react";
+import axios from "axios";
+import { Loader2, FileDown, ChevronLeft, ChevronRight } from "lucide-react";
+>>>>>>> d2fd4b9a6a0e5e4baf52d5fd8b55af162adad2dd
 
 export default function CertificatePage() {
   const [roll, setRoll] = useState("");
@@ -13,12 +19,18 @@ export default function CertificatePage() {
   const [loading, setLoading] = useState(false);
   const [searching, setSearching] = useState(false);
 
+<<<<<<< HEAD
   const fetchCertificate = async (e) => {
     if (e) e.preventDefault();
     
     if (!roll.trim()) {
       setError("Please enter a valid Roll Number or Registration ID.");
       setFiles([]);
+=======
+  const fetchCertificate = async () => {
+    if (!roll.trim()) {
+      setError("Please enter a roll number");
+>>>>>>> d2fd4b9a6a0e5e4baf52d5fd8b55af162adad2dd
       return;
     }
 
@@ -35,6 +47,7 @@ export default function CertificatePage() {
         typeof file === "string" ? file : file?.fileUrl;
 
       const fetchedFiles = [
+<<<<<<< HEAD
         { name: "Official Certificate", url: getUrl(res.data.certificate) },
         { name: "Detailed Marksheet", url: getUrl(res.data.marksheet) },
       ].filter(file => file.url); // Only keep files that actually have a URL
@@ -48,6 +61,17 @@ export default function CertificatePage() {
     } catch (err) {
       setFiles([]);
       setError(err.response?.data?.error || "No records found. Please check your roll number and try again.");
+=======
+        { name: "Certificate", url: getUrl(res.data.certificate) },
+        { name: "Marksheet", url: getUrl(res.data.marksheet) },
+      ];
+
+      setFiles(fetchedFiles);
+      setCurrentIndex(0);
+    } catch (err) {
+      setFiles([]);
+      setError(err.response?.data?.error || "No certificate found");
+>>>>>>> d2fd4b9a6a0e5e4baf52d5fd8b55af162adad2dd
     } finally {
       setLoading(false);
       setSearching(false);
@@ -60,6 +84,7 @@ export default function CertificatePage() {
   const prevFile = () =>
     setCurrentIndex((prev) => (prev - 1 + files.length) % files.length);
 
+<<<<<<< HEAD
   // SEO Rich FAQs Data
   const faqs = [
     {
@@ -307,20 +332,125 @@ export default function CertificatePage() {
         </section>
 
       </main>
+=======
+  return (
+    <div className="min-h-screen bg-white pt-20 pb-24 px-6">
+      {/* Header */}
+      <div className="text-center mb-14">
+        <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">
+          Certificate Verification
+        </h1>
+        <p className="mt-3 text-lg text-slate-600">
+          Enter your roll number to view or download your certificate.
+        </p>
+      </div>
+
+      {/* Search Box */}
+      <div className="max-w-xl mx-auto flex flex-col sm:flex-row items-center gap-4">
+        <input
+          type="text"
+          placeholder="Enter Roll Number"
+          value={roll}
+          onChange={(e) => setRoll(e.target.value)}
+          className="w-full border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+        />
+
+        <button
+          onClick={fetchCertificate}
+          disabled={loading}
+          className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-6 py-3 rounded-xl font-semibold shadow-md flex items-center gap-2 transition-all hover:scale-105 disabled:opacity-40"
+        >
+          {loading && <Loader2 className="animate-spin w-5 h-5" />}
+          {loading ? "Searching..." : "Verify"}
+        </button>
+      </div>
+
+      {/* Error Message */}
+      {error && (
+        <p className="text-center mt-6 text-red-600 font-medium animate-fadeIn">
+          {error}
+        </p>
+      )}
+
+      {/* Loading Indicator */}
+      {searching && !error && (
+        <p className="text-center mt-6 text-slate-700 animate-fadeIn">
+          Fetching certificate...
+        </p>
+      )}
+
+      {/* Certificate Preview */}
+      {files.length > 0 && !searching && (
+        <div className="mt-16 max-w-3xl mx-auto">
+          <h3 className="text-center text-2xl font-bold text-slate-900 mb-6 animate-fadeIn">
+            {files[currentIndex].name}
+          </h3>
+
+          <div className="relative">
+            <img
+              src={files[currentIndex].url}
+              alt="Document Preview"
+              className="w-full rounded-xl shadow-lg animate-scaleIn"
+            />
+
+            {/* Navigation Buttons */}
+            {files.length > 1 && (
+              <>
+                <button
+                  onClick={prevFile}
+                  className="absolute -left-6 top-1/2 -translate-y-1/2 bg-white p-3 rounded-full shadow-md hover:scale-110 transition"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+
+                <button
+                  onClick={nextFile}
+                  className="absolute -right-6 top-1/2 -translate-y-1/2 bg-white p-3 rounded-full shadow-md hover:scale-110 transition"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+              </>
+            )}
+          </div>
+
+          {/* Download Button */}
+          <div className="flex justify-center mt-8">
+            <a
+              href={files[currentIndex].url}
+              download
+              className="flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-xl font-semibold shadow-md hover:bg-blue-700 transition-all hover:scale-105"
+            >
+              <FileDown className="w-5 h-5" /> Download
+            </a>
+          </div>
+        </div>
+      )}
+>>>>>>> d2fd4b9a6a0e5e4baf52d5fd8b55af162adad2dd
 
       {/* Custom Animations */}
       <style jsx>{`
         .animate-fadeIn {
+<<<<<<< HEAD
           animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         .animate-scaleIn {
           animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+=======
+          animation: fadeIn 0.4s ease-out;
+        }
+        .animate-scaleIn {
+          animation: scaleIn 0.35s ease-out;
+>>>>>>> d2fd4b9a6a0e5e4baf52d5fd8b55af162adad2dd
         }
 
         @keyframes fadeIn {
           from {
             opacity: 0;
+<<<<<<< HEAD
             transform: translateY(10px);
+=======
+            transform: translateY(4px);
+>>>>>>> d2fd4b9a6a0e5e4baf52d5fd8b55af162adad2dd
           }
           to {
             opacity: 1;
@@ -331,7 +461,11 @@ export default function CertificatePage() {
         @keyframes scaleIn {
           from {
             opacity: 0;
+<<<<<<< HEAD
             transform: scale(0.97);
+=======
+            transform: scale(0.94);
+>>>>>>> d2fd4b9a6a0e5e4baf52d5fd8b55af162adad2dd
           }
           to {
             opacity: 1;
@@ -339,6 +473,12 @@ export default function CertificatePage() {
           }
         }
       `}</style>
+<<<<<<< HEAD
     </>
   );
 }
+=======
+    </div>
+  );
+}
+>>>>>>> d2fd4b9a6a0e5e4baf52d5fd8b55af162adad2dd
